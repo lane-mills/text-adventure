@@ -15,13 +15,14 @@ public class ConsoleAdventure {
     private static String yesNo = "y";
     private static String userChoice = " ";
     private static Scanner input = new Scanner(System.in);
-    private static int userHealth = 100;
-    private static int looperHealth = 100;
-    private static int attacks = 5;
+    private static int userHealth;
+    private static int looperHealth;
+    private static int attacks;
     private static int attacksCounter;
     private static int potion = 5;
     private static int postionCounter;
-    private static int damage = (int) (Math.random() * ((50 - 1) + 1)) + 1;
+    private static int yieldedDamage = (int) (Math.random() * ((50 - 1) + 1)) + 1;
+    private static int takenDamage = (int) (Math.random() * ((30 - 20) + 1)) + 20;
 
 
     public static String welcomePlayer() {
@@ -126,7 +127,7 @@ public class ConsoleAdventure {
             userChoice = input.nextLine();
             if (userChoice.equals("1")) {
 
-                looperHealth = looperHealth - damage ;
+                looperHealth = looperHealth - yieldedDamage ;
                 System.out.println("========================================\n" +
                         "\n" +
                         "You hit The Looper with a break statement and \n" +
@@ -163,6 +164,9 @@ public class ConsoleAdventure {
 
 
     public static void getStats() {
+        userHealth = 100;
+        looperHealth = 100;
+        attacks = 3;
         System.out.println("\n" +
                 "Here are your stats:\n" +
                 "Health: " + userHealth + " % \n" +
@@ -177,7 +181,7 @@ public class ConsoleAdventure {
         int sneakAttack = (int) (Math.random() * ((2 - 1) + 1)) + 1;
         int userPick = Integer.parseInt(userChoice);
         if (userPick == sneakAttack) {
-            userHealth = userHealth - damage;
+            userHealth = userHealth - takenDamage;
             System.out.println("=====================================\n");
             System.out.println("The Looper didn't like that he sneak attacked you \n" +
                     "with another infinite loop! \n" +
@@ -284,11 +288,9 @@ public class ConsoleAdventure {
     public static void restart(){
         System.out.println("\n" +
                 "Restart?");
+
         String replay = input.nextLine();
         if(replay.equalsIgnoreCase("y")){
-            userHealth = 100;
-            looperHealth = 100;
-            attacks = 5;
         welcomePlayer();
         playTheGame();
         userOptions();
