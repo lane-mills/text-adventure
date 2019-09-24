@@ -52,7 +52,7 @@ public class ConsoleAdventure {
         yesNo = input.nextLine();
         if (yesNo.equalsIgnoreCase("y")) {
             System.out.println("\n"+
-                    "Then you must defeat\n" +
+                    "Then you must defeat...\n" +
                     "_________          _______ \n" +
                     "\\__   __/|\\     /|(  ____ \\\n" +
                     "   ) (   | )   ( || (    \\/\n" +
@@ -82,13 +82,19 @@ public class ConsoleAdventure {
                     "                          | (____/\\| (___) || (___) || )      | (____/\\| ) \\ \\__ _ \n" +
                     "                          (_______/(_______)(_______)|/       (_______/|/   \\__/(_)\n" +
                     "                                                                                   \n");
-            System.out.println("muhahaha! He is here to throw infinite loops at your code you have worked so hard on!");
+            System.out.println("MuhahaaHaaa! He's here to throw infinite loops at your code that you've worked so hard on! Get Ready...");
             System.out.println("===================================================================================================================================================================");
 //
+            try {
 
-
+                Thread.sleep(10000);
             getStats();
             userOptions();
+
+            } catch(InterruptedException ex) {
+                System.out.println("Error");
+            }
+
 
 
 
@@ -122,7 +128,7 @@ public class ConsoleAdventure {
             looperHealth = looperHealth - 20;
             System.out.println("========================================\n"+
                     "\n" +
-                    "You hit the with a break statement and \n" +
+                    "You hit The Looper with a break statement and \n" +
                     "broke out of an infinite loop he tried to \n" +
                     "throw at you! \n" +
                     "________________________________________\n" +
@@ -165,6 +171,7 @@ public class ConsoleAdventure {
             System.out.println("=====================================\n");
             System.out.println("The Looper didn't like that he sneak attacked you \n" +
                     "with another infinite loop! \n" +
+                    "\n" +
                     "Your health is now: " + userHealth + "% \n");
             System.out.println("=====================================");
         }
@@ -188,7 +195,8 @@ public class ConsoleAdventure {
 
     public static void looperDead() {
         if (looperHealth <= 0) {
-            System.out.println("Congratulations, " +playerUpperCase+ "! You did it! You've successfully defeated The Infinite Looper! \n" +
+            System.out.println("\n" +
+                    "Congratulations, " +playerUpperCase+ "! You did it! You've successfully defeated The Infinite Looper! \n" +
                     " ▄         ▄  ▄▄▄▄▄▄▄▄▄▄▄  ▄▄        ▄  ▄▄        ▄  ▄▄▄▄▄▄▄▄▄▄▄  ▄▄▄▄▄▄▄▄▄▄▄  ▄ \n" +
                     "▐░▌       ▐░▌▐░░░░░░░░░░░▌▐░░▌      ▐░▌▐░░▌      ▐░▌▐░░░░░░░░░░░▌▐░░░░░░░░░░░▌▐░▌\n" +
                     "▐░▌       ▐░▌ ▀▀▀▀█░█▀▀▀▀ ▐░▌░▌     ▐░▌▐░▌░▌     ▐░▌▐░█▀▀▀▀▀▀▀▀▀ ▐░█▀▀▀▀▀▀▀█░▌▐░▌\n" +
@@ -201,7 +209,7 @@ public class ConsoleAdventure {
                     "▐░░▌     ▐░░▌▐░░░░░░░░░░░▌▐░▌      ▐░░▌▐░▌      ▐░░▌▐░░░░░░░░░░░▌▐░▌       ▐░▌▐░▌\n" +
                     " ▀▀       ▀▀  ▀▀▀▀▀▀▀▀▀▀▀  ▀        ▀▀  ▀        ▀▀  ▀▀▀▀▀▀▀▀▀▀▀  ▀         ▀  ▀ \n" +
                     "                                                                                 \n" +
-                    "Congratulations! You did it! You've successfully defeated The Infinite Looper! ");
+                    "********************************************************************************** ");
         }
     }
 
