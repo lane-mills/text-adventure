@@ -10,17 +10,18 @@ public class ConsoleAdventure {
     }
 
 
-    public static String playerName = "";
-    public static String playerUpperCase = "";
-    public static String yesNo = "y";
-    public static String userChoice = " ";
-    public static Scanner input = new Scanner(System.in);
-    public static int userHealth = 100;
-    public static int looperHealth = 100;
-    public static int attacks = 5;
-    public static int attacksCounter;
-    public static int potion = 5;
-    public static int postionCounter;
+    private static String playerName = "";
+    private static String playerUpperCase = "";
+    private static String yesNo = "y";
+    private static String userChoice = " ";
+    private static Scanner input = new Scanner(System.in);
+    private static int userHealth = 100;
+    private static int looperHealth = 100;
+    private static int attacks = 5;
+    private static int attacksCounter;
+    private static int potion = 5;
+    private static int postionCounter;
+    private static int damage = (int) (Math.random() * ((50 - 1) + 1)) + 1;
 
 
     public static String welcomePlayer() {
@@ -51,8 +52,10 @@ public class ConsoleAdventure {
         System.out.println(" Welcome " + playerUpperCase + "!" + " Do you want to go on an adventure ?" + " Y/N");
         yesNo = input.nextLine();
         if (yesNo.equalsIgnoreCase("y")) {
-            System.out.println("\n"+
+            System.out.println(
+                    "\n" +
                     "Then you must defeat...\n" +
+                    ConsoleColors.RED +
                     "_________          _______ \n" +
                     "\\__   __/|\\     /|(  ____ \\\n" +
                     "   ) (   | )   ( || (    \\/\n" +
@@ -81,79 +84,86 @@ public class ConsoleAdventure {
                     "                          | |      | |   | || |   | || (      | (      | (\\ (   (_)\n" +
                     "                          | (____/\\| (___) || (___) || )      | (____/\\| ) \\ \\__ _ \n" +
                     "                          (_______/(_______)(_______)|/       (_______/|/   \\__/(_)\n" +
-                    "                                                                                   \n");
+                    "                                                                                   \n" +
+                    ConsoleColors.RESET);
             System.out.println("MuhahaaHaaa! He's here to throw infinite loops at your code that you've worked so hard on! Get Ready...");
             System.out.println("===================================================================================================================================================================");
 //
             try {
 
-                Thread.sleep(10000);
-            getStats();
-            userOptions();
+                Thread.sleep(5000);
+                getStats();
+                userOptions();
 
-            } catch(InterruptedException ex) {
+            } catch (InterruptedException ex) {
                 System.out.println("Error");
             }
-
-
 
 
 //            userOptions();
         } else {
             System.out.println("okay...see you later");
-            System.out.println("\n" +
-                    "      _ \n" +
-                    "     / )\n" +
-                    " _  / / \n" +
-                    "(_)( (  \n" +
-                    "   | |  \n" +
-                    " _ ( (  \n" +
-                    "(_) \\ \\ \n" +
-                    "     \\_)\n" +
-                    "        \n");
+            System.out.println("\n");
+            restart();
+
+
+
+
+
+
         }
     }
 
 
-
     public static void userOptions() {
-        System.out.println("\n"+
-                "Please choose from the following options: \n" +
-                "1. Attack \n" +
-                "2. Drink Potion \n" +
-                "3. RUN! \n" +
-                "4. See Stats");
-        userChoice = input.nextLine();
-        if (userChoice.equals("1")) {
-            looperHealth = looperHealth - 20;
-            System.out.println("========================================\n"+
-                    "\n" +
-                    "You hit The Looper with a break statement and \n" +
-                    "broke out of an infinite loop he tried to \n" +
-                    "throw at you! \n" +
-                    "________________________________________\n" +
-                    "\n" +
-                    "The Looper's health is down to: " + looperHealth + "% \n" +
-                    "========================================\n");
-            looperAttack();
-            looperDead();
-            attacks = attacks - 1;
-            System.out.println("*** You have " + attacks + " attacks left! ***");
-            userOptions();
-        } else if (userChoice.equals("2")) {
-            drinkPotion();
+        while (userHealth > 0) {
+            System.out.println("\n" +
+                    "Please choose from the following options: \n" +
+                    "1. Attack \n" +
+                    "2. Drink Potion \n" +
+                    "3. RUN! \n" +
+                    "4. See Stats");
+            userChoice = input.nextLine();
+            if (userChoice.equals("1")) {
 
-        } else if (userChoice.equals("3")) {
-            runAway();
-        } else if (userChoice.equals("4")) {
-            getStats();
-            userOptions();
+                looperHealth = looperHealth - damage ;
+                System.out.println("========================================\n" +
+                        "\n" +
+                        "You hit The Looper with a break statement and \n" +
+                        "broke out of an infinite loop he tried to \n" +
+                        "throw at you! \n" +
+                        "________________________________________\n" +
+                        "\n" +
+                        "The Looper's health is down to: " + looperHealth + "% \n" +
+                        "========================================\n");
+                looperAttack();
+                looperDead();
+                playerDead();
+                attacks = attacks - 1;
+                System.out.println("*** You have " + attacks + " attacks left! ***");
+                if(attacks <= 0){
+                    playerDead();
+                 gameOver();
+                }
+                userOptions();
+            } else if (userChoice.equals("2")) {
+                drinkPotion();
+
+            } else if (userChoice.equals("3")) {
+                runAway();
+            } else if (userChoice.equals("4")) {
+                getStats();
+                userOptions();
+            } else {
+                System.out.println("INVALID ENTRY \n");
+                userOptions();
+            }
         }
     }
 
 
     public static void getStats() {
-        System.out.println("\n"+
+        System.out.println("\n" +
                 "Here are your stats:\n" +
                 "Health: " + userHealth + " % \n" +
                 "You have " + attacks + " attacks \n" +
@@ -167,7 +177,7 @@ public class ConsoleAdventure {
         int sneakAttack = (int) (Math.random() * ((2 - 1) + 1)) + 1;
         int userPick = Integer.parseInt(userChoice);
         if (userPick == sneakAttack) {
-            userHealth = userHealth - 10;
+            userHealth = userHealth - damage;
             System.out.println("=====================================\n");
             System.out.println("The Looper didn't like that he sneak attacked you \n" +
                     "with another infinite loop! \n" +
@@ -191,12 +201,16 @@ public class ConsoleAdventure {
             System.out.println("You can't drink potion, you're health is to high");
             userOptions();
         }
+        if (potion <= 0){
+            System.out.println("You don't have any more potion!");
+        }
     }
 
     public static void looperDead() {
         if (looperHealth <= 0) {
             System.out.println("\n" +
-                    "Congratulations, " +playerUpperCase+ "! You did it! You've successfully defeated The Infinite Looper! \n" +
+                    "Congratulations, " + playerUpperCase + "! You did it! You've successfully defeated The Infinite Looper! \n" +
+                    ConsoleColors.GREEN +
                     " ▄         ▄  ▄▄▄▄▄▄▄▄▄▄▄  ▄▄        ▄  ▄▄        ▄  ▄▄▄▄▄▄▄▄▄▄▄  ▄▄▄▄▄▄▄▄▄▄▄  ▄ \n" +
                     "▐░▌       ▐░▌▐░░░░░░░░░░░▌▐░░▌      ▐░▌▐░░▌      ▐░▌▐░░░░░░░░░░░▌▐░░░░░░░░░░░▌▐░▌\n" +
                     "▐░▌       ▐░▌ ▀▀▀▀█░█▀▀▀▀ ▐░▌░▌     ▐░▌▐░▌░▌     ▐░▌▐░█▀▀▀▀▀▀▀▀▀ ▐░█▀▀▀▀▀▀▀█░▌▐░▌\n" +
@@ -209,8 +223,51 @@ public class ConsoleAdventure {
                     "▐░░▌     ▐░░▌▐░░░░░░░░░░░▌▐░▌      ▐░░▌▐░▌      ▐░░▌▐░░░░░░░░░░░▌▐░▌       ▐░▌▐░▌\n" +
                     " ▀▀       ▀▀  ▀▀▀▀▀▀▀▀▀▀▀  ▀        ▀▀  ▀        ▀▀  ▀▀▀▀▀▀▀▀▀▀▀  ▀         ▀  ▀ \n" +
                     "                                                                                 \n" +
-                    "********************************************************************************** ");
+                    "********************************************************************************** "+
+                    ConsoleColors.RESET);
+
+            restart();
+
         }
+    }
+
+    public static void playerDead() {
+        if (userHealth <= 0 || attacks <= 0) {
+            for (int i = 0; i < 200; i++)
+                try {
+
+                    Thread.sleep(20);
+                    System.out.print("*******************Trapped in the INFINTE LOOP!**************************\n");
+
+                } catch (InterruptedException ex) {
+                    System.out.println("Error");
+                }
+            gameOver();
+        }
+    }
+
+    public static void gameOver() {
+        System.out.println("\n" +
+                ConsoleColors.RED +
+                " _______  _______  _______  _______    _______           _______  _______  _ \n" +
+                "(  ____ \\(  ___  )(       )(  ____ \\  (  ___  )|\\     /|(  ____ \\(  ____ )( )\n" +
+                "| (    \\/| (   ) || () () || (    \\/  | (   ) || )   ( || (    \\/| (    )|| |\n" +
+                "| |      | (___) || || || || (__      | |   | || |   | || (__    | (____)|| |\n" +
+                "| | ____ |  ___  || |(_)| ||  __)     | |   | |( (   ) )|  __)   |     __)| |\n" +
+                "| | \\_  )| (   ) || |   | || (        | |   | | \\ \\_/ / | (      | (\\ (   (_)\n" +
+                "| (___) || )   ( || )   ( || (____/\\  | (___) |  \\   /  | (____/\\| ) \\ \\__ _ \n" +
+                "(_______)|/     \\||/     \\|(_______/  (_______)   \\_/   (_______/|/   \\__/(_)\n" +
+                "                                                                             \n" +
+                ConsoleColors.RESET);
+
+              restart();
+
+
+
+
+
+
+
     }
 
     public static void runAway() {
@@ -219,18 +276,31 @@ public class ConsoleAdventure {
             userOptions();
         } else {
             System.out.println("How disappointing...");
-            System.out.println("\n" +
-                    " _______  _______  _______  _______    _______           _______  _______  _ \n" +
-                    "(  ____ \\(  ___  )(       )(  ____ \\  (  ___  )|\\     /|(  ____ \\(  ____ )( )\n" +
-                    "| (    \\/| (   ) || () () || (    \\/  | (   ) || )   ( || (    \\/| (    )|| |\n" +
-                    "| |      | (___) || || || || (__      | |   | || |   | || (__    | (____)|| |\n" +
-                    "| | ____ |  ___  || |(_)| ||  __)     | |   | |( (   ) )|  __)   |     __)| |\n" +
-                    "| | \\_  )| (   ) || |   | || (        | |   | | \\ \\_/ / | (      | (\\ (   (_)\n" +
-                    "| (___) || )   ( || )   ( || (____/\\  | (___) |  \\   /  | (____/\\| ) \\ \\__ _ \n" +
-                    "(_______)|/     \\||/     \\|(_______/  (_______)   \\_/   (_______/|/   \\__/(_)\n" +
-                    "                                                                             \n");
+            gameOver();
+
         }
     }
 
+    public static void restart(){
+        System.out.println("\n" +
+                "Restart?");
+        String replay = input.nextLine();
+        if(replay.equalsIgnoreCase("y")){
+            userHealth = 100;
+            looperHealth = 100;
+            attacks = 5;
+        welcomePlayer();
+        playTheGame();
+        userOptions();
+        getStats();
+        drinkPotion();
+        looperDead();
+        playerDead();
+        gameOver();
+        }else {
+            System.out.println("\n' +" +
+                    "Maybe another time!");
+        }
+        }
 
 }
