@@ -12,12 +12,13 @@ public class ConsoleAdventure {
     public static String playerName = "";
     public static String yesNo = "y";
     public static String userChoice = " ";
-    public static String loserMsg = "You Lose!";
     public static Scanner input = new Scanner(System.in);
     public static int userHealth = 100;
     public static int looperHealth = 100;
-    public static int attacks = 100;
+    public static int attacks = 5;
+    public static int attacksCounter;
     public static int potion = 5;
+    public static int postionCounter;
 
 
     public static String welcomePlayer() {
@@ -58,12 +59,14 @@ public class ConsoleAdventure {
                     "   )_(   |/     \\|(_______/  \\_______/|/    )_)|/       \\_______/|/    )_)\\_______/   )_(   (_______/  (_______/(_______)(_______)|/       (_______/|/   \\__/\n" +
                     "                                                                                                                                                             \n");
             System.out.println("muhahaha! He is here to throw infinite loops at your code you have worked so hard on!");
-            System.out.println("Here are your stats:\n" +
-                    "Health: " + userHealth + "% \n" +
-                    "The Looper's Health is: " + looperHealth + "\n" +
-                    "You have " + attacks + " attacks \n" +
-                    "You have " + potion + " potions \n");
+            System.out.println("===================================================================================================================================================================");
+
+            getStats();
             userOptions();
+
+
+            System.out.println("===================================================================================================================================================================");
+//            userOptions();
         } else {
             System.out.println("okay...see you later");
             System.out.println("\n" +
@@ -76,42 +79,88 @@ public class ConsoleAdventure {
                     "(_) \\ \\ \n" +
                     "     \\_)\n" +
                     "        \n");
-
-
         }
-
-
     }
 
     public static void userOptions() {
-        System.out.println("Please choose from the following options: \n" +
-                "1. Attack \n" +
-                "2. Drink Potion \n" +
-                "3. Retreat!");
-        userChoice = input.nextLine();
-        if (userChoice.equals("1")) {
-            looperHealth = looperHealth - 20;
-            System.out.println("You hit the looper head on! \n" +
-                    "The Looper's health is down to: " + looperHealth + "% \n");
-            looperAttack();
-            userOptions();
-        }else if(userChoice.equals("2")){
-            if(userHealth != 95){
-            userHealth = userHealth + potion;
-            System.out.println("You drank the potion! \n" +
-                    "Your health is now: " + userHealth +"%");
-            }else{
-                System.out.println("You can't drink potion, you're a maxed out");
+
+
+            System.out.println("Please choose from the following options: \n" +
+                    "1. Attack \n" +
+                    "2. Drink Potion \n" +
+                    "3. Retreat! \n" +
+                    "4. See Stats");
+            userChoice = input.nextLine();
+            if (userChoice.equals("1")) {
+                looperHealth = looperHealth - 20;
+                System.out.println("You hit the looper head on with a break statement and broke out of an infinite loop he tried to throw at you! \n" +
+                        "The Looper's health is down to: " + looperHealth + "% \n");
+                looperAttack();
+                attacks = attacks - 1;
+                System.out.println("you have " + attacks + " attacks left!");
+                userOptions();
+            } else if (userChoice.equals("2")) {
+                drinkPotion();
+
+            } else if (userChoice.equals("3")) {
+                runAway();
+            } else if (userChoice.equals("4")) {
+                getStats();
                 userOptions();
             }
+    }
 
-        }
+
+    public static void getStats () {
+        System.out.println("Here are your stats:\n" +
+                "Health: " + userHealth + "% \n" +
+                "You have " + attacks + " attacks \n" +
+                "You have " + potion + " potions \n");
+        System.out.println("========================================");
+        System.out.println("The Looper's Health is: " + looperHealth);
+        System.out.println("========================================");
     }
 
     public static void looperAttack() {
-        userHealth = userHealth - 10;
-        System.out.println("Looper attacked you back! \n" +
-                "Your health is now: " + userHealth + "% \n");
+
+            userHealth = userHealth - 10;
+            System.out.println("==================================================");
+            System.out.println("Looper attacked you back with another infinite loop! \n" +
+                    "Your health is now: " + userHealth + "% \n");
+    }
+
+    public static void drinkPotion() {
+                    if(userHealth <= 95){
+            userHealth = userHealth + potion;
+            System.out.println("You drank the potion! \n" +
+                    "Your health is now: " + userHealth +"%");
+                    potion = potion -1;
+                        System.out.println("you now have " + potion + " potions left");
+
+                    userOptions();
+            }else{
+                System.out.println("You can't drink potion, you're health is to high");
+                userOptions();
+            }
+    }
+
+    public static void runAway () {
+        if(userHealth <= 20){
+            System.out.println("sorry you cant run away..You must defeat the Infinite Looper!");
+            userOptions();
+        }else {
+            System.out.println("How disappointing...");
+            System.out.println("\n" +
+                    " _______  _______  _______  _______    _______           _______  _______  _ \n" +
+                    "(  ____ \\(  ___  )(       )(  ____ \\  (  ___  )|\\     /|(  ____ \\(  ____ )( )\n" +
+                    "| (    \\/| (   ) || () () || (    \\/  | (   ) || )   ( || (    \\/| (    )|| |\n" +
+                    "| |      | (___) || || || || (__      | |   | || |   | || (__    | (____)|| |\n" +
+                    "| | ____ |  ___  || |(_)| ||  __)     | |   | |( (   ) )|  __)   |     __)| |\n" +
+                    "| | \\_  )| (   ) || |   | || (        | |   | | \\ \\_/ / | (      | (\\ (   (_)\n" +
+                    "| (___) || )   ( || )   ( || (____/\\  | (___) |  \\   /  | (____/\\| ) \\ \\__ _ \n" +
+                    "(_______)|/     \\||/     \\|(_______/  (_______)   \\_/   (_______/|/   \\__/(_)\n" +
+                    "                                                                             \n");
+        }
     }
 
 
